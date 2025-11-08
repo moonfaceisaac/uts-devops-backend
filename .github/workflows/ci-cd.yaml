@@ -39,4 +39,4 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/backend:master
+            ${{ secrets.DOCKERHUB_USERNAME }}/utsfinal-backend:latest
