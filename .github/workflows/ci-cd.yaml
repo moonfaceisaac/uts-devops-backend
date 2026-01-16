@@ -52,8 +52,17 @@ jobs:
       - name: Update backend image tag
         if: github.ref == 'refs/heads/master'
         run: |
-          sed -i "s|image: .*utsfinal-backend:.*|image: ${{ secrets.DOCKERHUB_USERNAME }}/utsfinal-backend:${{ github.sha }}|" deploy/k8s/backend/backend-deployment.yaml
+          FILE=deploy/k8s/backend/backend-deployment.yaml
+          IMAGE="${{ secrets.DOCKERHUB_USERNAME }}/utsfinal-backend:${{ github.sha }}"
 
+          if grep -q "utsfinal-backend:" "$FILE"; then
+            sed -i "s|utsfinal-backend:.*|utsfinal-backend:${{ github.sha }}|" "$FILE"
+          else
+            sed -i "s|utsfinal-backend|utsfinal-backend:${{ github.sha }}|" "$FILE"
+          fi
+
+          echo "Updated image to $IMAGE"
+          
       - name: Commit and push manifest
         if: github.ref == 'refs/heads/master'
         run: |
