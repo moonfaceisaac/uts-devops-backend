@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/todo", todolistRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Server TODOLIST Test");
+  res.send("Server TODO Test");
 });
 
 // Jalankan server
